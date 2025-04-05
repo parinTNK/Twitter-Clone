@@ -2,9 +2,12 @@ import mongoose from 'mongoose';
 
 const connectMongoDB = async () => {
     try {
+        if (!process.env.MONGO_URI) {
+            throw new Error("MONGO_URI is not defined in .env file");
+        }
         const conn = await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true, // Use new URL parser
-            useUnifiedTopology: true, // Use new topology engine
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
         });
         console.log('MongoDB connected successfully');
     } catch (error) {
